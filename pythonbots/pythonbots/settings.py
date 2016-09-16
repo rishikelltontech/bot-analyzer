@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+#import mongoengine 
+# from mongoengine import register_connection
+# register_connection(alias='default',name='logparsers')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'readlog'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,14 +78,30 @@ WSGI_APPLICATION = 'pythonbots.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+#DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_mongodb_engine',
+#         'NAME' : 'logparsers',
+#         'HOST' : '127.0.0.1',
+#         'PORT' : '27017'
+#     },
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'botanalyzer',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -99,4 +119,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+#STATIC_ROOT = '/home/user/Downloads/HTC-tech-initiatives/shieldcon/static/'
+#STATICFILES_DIRS = ( 'home/user/Downloads/HTC-tech-initiatives/shieldcon/static/', )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+# MONGODB_USER = ''
+# MONGODB_PASSWD = ''
+# MONGODB_HOST = ''
+# MONGODB_NAME = 'logparsers'
+# MONGODB_DATABASE_HOST = \
+#     'mongodb://%s:%s@%s/%s' \
+#     % (MONGODB_USER, MONGODB_PASSWD, MONGODB_HOST, MONGODB_NAME)
+
+# mongoengine.connect(MONGODB_NAME, host=MONGODB_DATABASE_HOST)
