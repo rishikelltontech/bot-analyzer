@@ -27,7 +27,7 @@ good_bots = []
 def preliminary_test():
 	"""
 	This evaluates whether the request contains a user agent
-	or not. 
+	or not.
 	"""
 	conn = MySQLdb.connect(host = "localhost", user = "root",
                             passwd = "root", db = "botanalyzer")
@@ -55,7 +55,7 @@ def preliminary_test():
 		hits = c1[0][0]
 		cursor.execute("INSERT INTO readlog_badbotsip (host, Description, date_time, hits) VALUES (%s,%s,%s,%s)",(str(temp[i][0]), description_bad_ip, temp[i][1], hits))
 
-	
+
 	local_host = '127.0.0.1'
 	cursor.execute("delete from readlog_badbotsip where host = %s",[local_host])
 	conn.commit()
@@ -76,7 +76,7 @@ def botAndIp():
 
 	desc=['googlebot','Mozilla/xintellibot','Twitterbot', 'bitlybot', 'bitlybot/2.0','msnbot','bingbot','facebookexternalhit']
 	count = 0
-	
+
 	for i in range(length):
 		temp = []
 		hitslist = []
@@ -84,12 +84,12 @@ def botAndIp():
 		data= cursor.fetchall()
 		date_list = []
 		print a[i]," : ",len(data)
-		
+
 		for x  in range(len(data)):
 			temp.append(data[x][0])
 			date_list.append(data[x][1])
 			hitslist.append(data[x][2])
-		
+
 		for p in range(len(temp)):
 
 			cursor.execute("INSERT INTO readlog_goodbots (host, Description, date_time, hits) VALUES (%s,%s,%s,%s)",(temp[p], desc[count], date_list[p], hitslist[p]))
@@ -109,12 +109,12 @@ def scrappers():
 
 	a1='Offline Explorer|SiteSnagger|WebCopier|WebReaper|WebStripper|WebZIP|TeleportPro|Xaldon_WebSpider'
 	#a = 'Offline Explorer|qwant|Grapeshot|DotBot|OrangeBot|CrystalSemanticsBot'
-	a = ['Offline Explorer','qwant','Grapeshot','DotBot','OrangeBot','CrystalSemanticsBot','rogerbot','GarlikCrawler','MojeekBot']	
+	a = ['Offline Explorer','qwant','Grapeshot','DotBot','OrangeBot','CrystalSemanticsBot','rogerbot','GarlikCrawler','MojeekBot']
 	#import pdb;pdb.set_trace()
 	for x in range(len(a)):
 		cursor.execute("select distinct(host), user_agents, date_time from readlog_logconfig where user_agents REGEXP %s group by host",[a[x]])
 		data= cursor.fetchall()
-	
+
 		for i in range(len(data)):
 			ips = str(data[i][0])
 			#scr = str(data[i][1])
@@ -128,7 +128,7 @@ def scrappers():
 			hits = c1[0][0]
 
 			#cursor.execute("INSERT INTO readlog_badbotsip (host, Description, date_time, hits) VALUES (%s,%s,%s,%s)",(ips,des,dts, hits))
-			
+
 			cursor.execute("INSERT INTO readlog_badbotsip_test (host, Description, date_time, hits) VALUES (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE host = %s, Description = %s, date_time = %s, hits = %s",[ips,des,dts, hits,ips,des,dts, hits])
 
 	conn.commit()
@@ -146,7 +146,7 @@ def badbot_agents():
 	for i in range(len(b)):
 		cursor.execute("select distinct(host), date_time from readlog_logconfig where user_agents REGEXP %s group by host",[b[i]])
 		data= cursor.fetchall()
-		
+
 		print len(data)
 		for x in range(len(data)):
 			ips = str(data[x][0])

@@ -26,7 +26,7 @@ def bulk_insert_logs_2(host_list,client_id_list,user_id_list,
 			date_time_list,method_list,endpoint_list,protocol_list,
 			response_code_list,content_size_list,user_agents_list,
 			mobile_list,user_agent_flag_list,section_list,left):
-	
+
 	conn = MySQLdb.connect(host = "localhost", user = "root",
 							passwd = "root", db = "botanalyzer")
 
@@ -44,7 +44,7 @@ def bulk_insert_logs(host_list,client_id_list,user_id_list,
 			date_time_list,method_list,endpoint_list,protocol_list,
 			response_code_list,content_size_list,user_agents_list,
 			mobile_list,user_agent_flag_list,section_list):
-	
+
 	conn = MySQLdb.connect(host = "localhost", user = "root",
 							passwd = "root", db = "botanalyzer")
 
@@ -66,7 +66,6 @@ def get_old_access_logs():
 	    dir_entry_path = os.path.join(path, dir_entry)
 	    if os.path.isfile(dir_entry_path):
 	        with open(dir_entry_path, 'r') as f:
-				#f = open('/home/gaurav/myproject/30_access.log','r')
 				count = 0
 				text = f.readlines()
 				f.close()
@@ -89,13 +88,12 @@ def get_old_access_logs():
 				section_list           = []
 
 
-				#f = open("/home/gaurav/myproject/readlog/testlogs.txt",'a')
 				while count<num_lines:
-					
+
 					req = text[count]
 					m = re.findall ( 'httpd: (.*?) -', req, re.DOTALL)
 					p = re.findall('- - (.*$)',req,re.DOTALL)
-					
+
 					try:
 						matchObj = re.match(old_log_pattern,p[0], re.M|re.I)
 					except:
@@ -131,14 +129,14 @@ def get_old_access_logs():
 								user_agents10 = '-'
 								print user_agents10
 							user_agent_string = str(user_agents10)
-							
+
 							user_agent_flag = 0
 							if(user_agents10):
 								user_agent_flag = 1
 
 							if mobile_string in user_agent_string:
 								mobile_string_present = 1
-							
+
 							mobile11 = mobile_string_present
 							temp_section = endpoint6.split('/')
 							if(temp_section[1] == ''):
@@ -194,7 +192,7 @@ def get_old_access_logs():
 								mobile_list            = []
 								user_agent_flag_list   = []
 								section_list           = []
-				
+
 
 					#f.write(line_to_parse)
 					count+=1
